@@ -1,12 +1,22 @@
 import express from "express";
-import { createOrder, getOrder, getOrders, updateOrder } from "../../controllers/orders";
 
-let orders = express.Router()
+// Controllers
+import {
+  createOrder,
+  getOrder,
+  getOrders,
+  updateOrder,
+} from "../../controllers/orders";
 
-orders.get('/', getOrders);
-orders.get('/:id', getOrder);
-orders.post('/', createOrder);
-orders.put('/:id', updateOrder);
+// Middlewares
+import auth from "../../middlewares/auth";
 
+let orders = express.Router();
+
+orders.get("/", auth, getOrders);
+orders.get("/status/:status", auth, getOrders);
+orders.get("/:id", auth, getOrder);
+orders.post("/", auth, createOrder);
+orders.put("/:id", auth, updateOrder);
 
 export default orders;

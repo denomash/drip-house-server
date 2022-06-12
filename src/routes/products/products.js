@@ -1,11 +1,21 @@
 import express from "express";
-import { createProduct, getProduct, getProducts, updateProduct } from "../../controllers/products";
+
+// Controllers
+import {
+  createProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+} from "../../controllers/products";
+
+// Middlewares
+import auth from "../../middlewares/auth";
 
 let products = express.Router();
 
-products.get("/", getProducts);
-products.get("/:id", getProduct);
-products.put("/:id", updateProduct);
-products.post("/", createProduct);
+products.get("/", auth, getProducts);
+products.get("/:id", auth, getProduct);
+products.put("/:id", auth, updateProduct);
+products.post("/", auth, createProduct);
 
 export default products;

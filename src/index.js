@@ -5,7 +5,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 
 // Routes
-import { orders, products, drivers } from "./routes";
+import { orders, products, drivers, auth } from "./routes";
 
 require('dotenv').config()
 
@@ -27,6 +27,9 @@ app.use(cors());
 
 // Logger
 app.use(morgan('combined'))
+
+// Authentication Routes
+app.use('/auth', auth)
 // Products Routes
 app.use('/products', products)
 // Orders Routes

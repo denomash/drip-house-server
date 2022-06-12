@@ -44,6 +44,7 @@ const createOrder = async (req, res) => {
 };
 
 const getOrders = (req, res) => {
+  console.log(req.query, req.params);
   Order.find({})
     .then((result) => res.status(200).json([...result]))
     .catch((error) => res.status(500).json({ message: error }));
