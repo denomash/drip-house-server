@@ -7,34 +7,36 @@ import mongoose from "mongoose";
 // Routes
 import { orders, products, drivers, auth } from "./routes";
 
-require('dotenv').config()
+require("dotenv").config();
 
 const PORT = process.env.PORT || 8080;
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI, {
-    dbName: process.env.DB_NAME,
-})
-    .then((result) => console.log('DATABASE CONNECTED'))
-    .catch((err) => console.log("DATABASE CONNECTION ERROR:", err));
-
-app.use(bodyParser.json());
-
 // TODO - UPDATE THIS TO USE CORS to only allow our frontend to access backend
 app.use(cors());
 
+mongoose
+  .connect(process.env.MONGO_URI, {
+    dbName: process.env.DB_NAME,
+  })
+  .then((result) => console.log("DATABASE CONNECTED"))
+  .catch((err) => console.log("DATABASE CONNECTION ERROR:", err));
+
+app.use(bodyParser.json());
 
 // Logger
-app.use(morgan('combined'))
+app.use(morgan("combined"));
 
 // Authentication Routes
-app.use('/auth', auth)
+app.use("/auth", auth);
 // Products Routes
-app.use('/products', products)
+app.use("/products", products);
 // Orders Routes
-app.use('/orders', orders)
+app.use("/orders", orders);
 // Drivers Routes
-app.use('/drivers', drivers)
+app.use("/drivers", drivers);
 
-app.listen(PORT, () => console.log(`Listening on port http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Listening on port http://localhost:${PORT}`)
+);
