@@ -14,7 +14,7 @@ const validateProductsCustomers = async (products, customer) => {
       message: "Please provide all user details!",
     });
   }
-}
+};
 
 const createOrder = async (req, res) => {
   const { products, total, customer } = req.body;
@@ -44,7 +44,6 @@ const createOrder = async (req, res) => {
 };
 
 const getOrders = (req, res) => {
-  console.log(req.query, req.params);
   Order.find({})
     .then((result) => res.status(200).json([...result]))
     .catch((error) => res.status(500).json({ message: error }));
@@ -63,7 +62,7 @@ const getOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   const { type, payload, orderNumber } = req.body;
 
-  if (type === 'ORDER_EDIT') {
+  if (type === "ORDER_EDIT") {
     validateProductsCustomers(payload.products, payload.customer);
   }
 
@@ -90,11 +89,12 @@ const updateOrder = async (req, res) => {
   events.push({
     ...payload.event,
     timestamp: new Date(),
-    ...(type !== 'ORDER_EDIT' & {
-      location: payload?.location || "",
-      driverName: payload?.driver?.name || "",
-      car: payload?.driver?.car_identity || "",
-    })
+    ...((type !== "ORDER_EDIT") &
+      {
+        location: payload?.location || "",
+        driverName: payload?.driver?.name || "",
+        car: payload?.driver?.car_identity || "",
+      }),
   });
 
   updateObj.events = [...events];

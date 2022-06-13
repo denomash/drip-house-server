@@ -8,7 +8,7 @@ const getProducts = (req, res) => {
 
 const getProduct = async (req, res) => {
   Product.findOne({ _id: req.params.id })
-    .then((result) => res.status(200).json({ ...result }))
+    .then((result) => res.status(200).json({ result }))
     .catch(() => res.status(404).json({ error: "Product not found" }));
 };
 
@@ -21,8 +21,22 @@ const updateProduct = async (req, res) => {
     image,
   };
 
-  Product.findOneAndUpdate({ _id: req.params.id }, product, { new: true })
-    .then((result) => res.status(200).json({ ...result }))
+  const exists = await Product.find({ _id: req.params.id });
+
+  if (!exists) {
+    return res
+      .status(404)
+      .json({ message: "Product with associated id doesn't exist!" });
+  }
+
+  Product.updateOne(
+    { _id: req.params.id },
+    {
+      $set: product,
+    },
+    { new: true }
+  )
+    .then((result) => res.status(200).json({ result }))
     .catch((error) => res.status(404).json({ error: "Product not found" }));
 };
 

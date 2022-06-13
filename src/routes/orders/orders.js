@@ -15,7 +15,7 @@ let orders = express.Router();
 
 orders.get("/", auth, getOrders);
 orders.get("/status/:status", auth, getOrders);
-orders.get("/:id", auth, getOrder);
+orders.get("/:id", getOrder);
 orders.post("/", auth, createOrder);
 orders.put("/:id", auth, updateOrder);
 

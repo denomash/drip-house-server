@@ -22,7 +22,7 @@ const login = async (req, res) => {
         { userId: user._id, email },
         process.env.SECERY_KEY,
         {
-          expiresIn: "4h",
+          expiresIn: "30d",
         }
       );
 
